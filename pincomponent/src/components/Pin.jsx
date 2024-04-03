@@ -31,7 +31,40 @@ const Pin = ({ length = 4, perInputBoxLength = 1, getThePinFn = () => {} }) => {
     getThePinFn(inputBoxValue.join(""));
   };
 
-  const handlePaste = (e) => {};
+  const handlePaste = (e) => {
+    e.preventDefault();
+
+    // const example = "abcdefghijklmnopqrstuvwxyz"  --> ["abc","def","ghi",...]
+
+    const copyData = e.clipboardData
+      .getData("text")
+      .split("")
+      .filter((_, index) => index < perInputBoxLength * length);
+
+    // console.log(copyData);
+
+    let value = [];
+
+    for (let i = 0; i < length * perInputBoxLength; i += perInputBoxLength) {
+      let str = "";
+      for (let j = i; j < i + perInputBoxLength; j++) {
+        str += copyData[j];
+      }
+      value.push(str);
+    }
+
+    console.log(inputRef);
+
+    value.forEach((el, i) => {
+      inputBoxValue[i] = el;
+
+      inputRef.current[i].value = el;
+
+      if (i < length - 1) {
+        inputRef.current[i + 1].focus();
+      }
+    });
+  };
 
   return (
     <div onPaste={handlePaste}>
