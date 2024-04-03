@@ -33,7 +33,6 @@ const Pin = ({ length = 4, perInputBoxLength = 1, getThePinFn = () => {} }) => {
 
   const handlePaste = (e) => {};
 
-
   return (
     <div onPaste={handlePaste}>
       {inputBoxes.map((_, index) => (
